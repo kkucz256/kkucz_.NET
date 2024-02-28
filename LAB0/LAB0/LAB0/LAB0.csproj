@@ -7,9 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="C:\Users\krzkuc9631\Desktop\FizzBuzz.cs" Link="FizzBuzz.cs" />
-    <Compile Include="C:\Users\krzkuc9631\Desktop\Program.cs" Link="Program.cs" />
-  </ItemGroup>
-
 </Project>
