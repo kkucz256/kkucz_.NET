@@ -10,13 +10,13 @@
             int seed = int.Parse(Console.ReadLine());
 
             Problem problem = new Problem(number, seed);
+            Console.WriteLine(problem);
 
-            Console.WriteLine("\nEnter the capacity: ");
+            Console.WriteLine("Enter the capacity: ");
             int capacity = int.Parse(Console.ReadLine());
             Result result = problem.solve(capacity);
             Console.WriteLine(result);
 
-            Console.ReadLine();
 
         }
     }

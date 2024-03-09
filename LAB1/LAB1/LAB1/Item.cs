@@ -23,21 +23,21 @@ namespace LAB1
         }
 
         public int Weight
-        { 
-          get { return weight; } 
+        {
+            get { return weight; }
         }
         public int Price
         {
             get { return price; }
         }
-        public int Taken {get; set;}
+        public int Taken { get; set; }
         public int Index
         {
             get { return elem_index; }
         }
         public double Ratio
         {
-            get { return ratio; } 
+            get { return ratio; }
         }
 
     }

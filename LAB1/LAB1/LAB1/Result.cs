@@ -12,7 +12,7 @@ namespace LAB1
         List<Item> packed = new List<Item>();
         int total_weight;
         int total_value;
-        public Result(List<Item> list) 
+        public Result(List<Item> list)
         {
             this.packed = list;
             foreach (Item item in packed)
@@ -23,18 +23,14 @@ namespace LAB1
         }
         public override string ToString()
         {
-            return "Item ids: " + items_ids() + "\nTotal value: " + total_value + "\nTotal weight: " + total_weight;
-        }
-        public string items_ids()
-        {
-            List<string> results = new List<string>();
-
+            string output = "";
             foreach (Item item in packed)
             {
-                results.Add(item.Index.ToString());
+                string new_string = $"{item.Index} ";
+                output += new_string;
             }
-
-            return string.Join(" ", results);
+            return $"Item ids: {output} \nTotal value: {total_value} \nTotal weight: {total_weight}";
         }
     }
 }
+

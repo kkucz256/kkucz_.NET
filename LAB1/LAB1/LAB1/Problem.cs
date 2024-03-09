@@ -18,15 +18,14 @@ namespace LAB1
             this.seed = seed;
             Random random = new Random(seed);
 
-            for (int i = 0; i < n; i++) 
+            for (int i = 0; i < n; i++)
             {
-                Item new_item = new Item(random.Next(1,11), random.Next(1,11));
+                Item new_item = new Item(random.Next(1, 11), random.Next(1, 11));
                 items_list.Add(new_item);
-                Console.WriteLine("ID: " + items_list[i].Index.ToString() +" Value: " + items_list[i].Price.ToString()+ " Weight: "+ items_list[i].Weight.ToString());
             }
         }
 
-        public Result solve(int count) 
+        public Result solve(int count)
         {
             int total_weight = 0;
             List<Item> sorted_items = new List<Item>();
@@ -34,26 +33,34 @@ namespace LAB1
 
 
             sorted_items = items_list.OrderByDescending(item => item.Ratio).ToList<Item>();
-            for(int i = 0; i < n;i++) 
+            for (int i = 0; i < n; i++)
             {
-                 if (total_weight + sorted_items[i].Weight <= count)
-                 {
+                if (total_weight + sorted_items[i].Weight <= count)
+                {
                     packed.Add(sorted_items[i]);
                     total_weight += sorted_items[i].Weight;
-                 }
-                 else
-                 {
-                     break;
-                 }
+                }
+                else
+                { break; }
             }
 
 
             return new Result(packed);
-           }
-
         }
-     
+
+        public override string ToString()
+        {
+            string output = "";
+            foreach (Item item in items_list)
+            {
+                string new_string = $"ID: {item.Index} Value: {item.Price} Weight: {item.Weight}\n";
+                output += new_string;
+            }
+            return output;
+        }
+    }
 
 
-    
+
+
 }
