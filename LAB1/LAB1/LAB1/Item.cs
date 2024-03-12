@@ -11,7 +11,7 @@ namespace LAB1
         private int weight;
         private int price;
         private double ratio;
-        static private int index;
+        private static int index = 0;
         private int elem_index;
 
         public Item(int weight, int value)
@@ -25,19 +25,27 @@ namespace LAB1
         public int Weight
         {
             get { return weight; }
+            set { weight = value; }
         }
         public int Price
         {
             get { return price; }
+            set { price = value; }
         }
         public int Taken { get; set; }
         public int Index
         {
             get { return elem_index; }
+            set { elem_index = value; }
         }
         public double Ratio
         {
             get { return ratio; }
+        }
+
+        public static void ResetIndex()
+        {
+            index = 0;
         }
 
     }

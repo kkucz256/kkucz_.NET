@@ -31,6 +31,19 @@ namespace LAB1
             }
             return $"Item ids: {output} \nTotal value: {total_value} \nTotal weight: {total_weight}";
         }
+
+        public List<Item> Packed
+        {
+            get { return packed; }
+        }
+        public int Total_weight 
+        {
+            get { return total_weight; }
+        }
+        public int Total_value
+        {
+            get { return total_value; }
+        }
     }
 }
 

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+[assembly: InternalsVisibleTo("TestProject"), InternalsVisibleTo("Knapsack")]
 
 namespace LAB1
 {
@@ -17,7 +19,7 @@ namespace LAB1
             this.n = n;
             this.seed = seed;
             Random random = new Random(seed);
-
+            Item.ResetIndex();
             for (int i = 0; i < n; i++)
             {
                 Item new_item = new Item(random.Next(1, 11), random.Next(1, 11));
@@ -27,6 +29,7 @@ namespace LAB1
 
         public Result solve(int count)
         {
+            
             int total_weight = 0;
             List<Item> sorted_items = new List<Item>();
             List<Item> packed = new List<Item>();
@@ -49,7 +52,7 @@ namespace LAB1
         }
 
         public override string ToString()
-        {
+        { 
             string output = "";
             foreach (Item item in items_list)
             {
@@ -57,6 +60,12 @@ namespace LAB1
                 output += new_string;
             }
             return output;
+        }
+
+        public List<Item> Items_list
+        {
+            get { return items_list; }
+            set { items_list = value; }
         }
     }
 

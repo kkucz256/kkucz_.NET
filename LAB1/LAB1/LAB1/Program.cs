@@ -4,6 +4,7 @@
     {
         static void Main(string[] args)
         {
+            
             Console.WriteLine("Enter the number of items: ");
             int number = int.Parse(Console.ReadLine());
             Console.WriteLine("Enter the seed: ");
@@ -16,7 +17,7 @@
             int capacity = int.Parse(Console.ReadLine());
             Result result = problem.solve(capacity);
             Console.WriteLine(result);
-
+            
 
         }
     }
