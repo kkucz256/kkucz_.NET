@@ -123,7 +123,7 @@ namespace TestProject
         [TestMethod]
         public void Wrong_random()
         {
-            int number = -1;
+            int number = 10;
             int seed = 1;
             int capacity = 10;
             Random random = new Random(seed);

@@ -22,18 +22,16 @@ namespace LAB1
             Item.ResetIndex();
             for (int i = 0; i < n; i++)
             {
-                Item new_item = new Item(random.Next(1, 11), random.Next(1, 11));
+                Item new_item = new Item(random.Next(1, 10), random.Next(1, 10));
                 items_list.Add(new_item);
             }
         }
 
         public Result solve(int count)
         {
-            
             int total_weight = 0;
             List<Item> sorted_items = new List<Item>();
             List<Item> packed = new List<Item>();
-
 
             sorted_items = items_list.OrderByDescending(item => item.Ratio).ToList<Item>();
             for (int i = 0; i < n; i++)
@@ -46,13 +44,11 @@ namespace LAB1
                 else
                 { break; }
             }
-
-
             return new Result(packed);
         }
 
         public override string ToString()
-        { 
+        {
             string output = "";
             foreach (Item item in items_list)
             {
@@ -68,8 +64,5 @@ namespace LAB1
             set { items_list = value; }
         }
     }
-
-
-
-
 }
+

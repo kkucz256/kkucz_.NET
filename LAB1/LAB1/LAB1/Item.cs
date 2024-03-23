@@ -14,7 +14,7 @@ namespace LAB1
         private static int index = 0;
         private int elem_index;
 
-        public Item(int weight, int value)
+        public Item(int value, int weight)
         {
             this.weight = weight;
             this.price = value;
