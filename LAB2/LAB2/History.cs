@@ -10,25 +10,59 @@ namespace LAB2
 {
     internal class History : DbContext
     {
-        public DbSet<Data> Data_history { get; set; }
+        public DbSet<Database_data> Measurements { get; set; }
         public History()
         {
-            Database.EnsureCreated();
+           Database.Migrate();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite(@"Data Source=database.db");
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        
+        public List<Database_data> sort_data_desc(string sort_by)
         {
-            modelBuilder.Entity<Data>().HasData(
+            var data = Measurements.ToList();
 
-                new Data(){ Id = 1, name = "Wrocław"/*,main = new Main { Id = 1, temp = 3, feels_like = 5 }*/ },
-                new Data(){ Id = 2, name = "Warsaw"/*, main = new Main { Id = 2, temp = 5, feels_like = 8 }*/ },
-                new Data(){ Id = 3, name = "Krakow"/*, main = new Main { Id = 3, temp = 3, feels_like = 5 }*/ },
-                new Data() { Id = 4, name = "Żary"/*, main = new Main { Id = 3, temp = 3, feels_like = 5 }*/ }
-                );
+            switch (sort_by.ToLower())
+            {
+                case "temp":
+                    data = data.OrderByDescending(d => d.Temp).ToList();
+                    break;
+                case "pressure":
+                    data = data.OrderByDescending(d => d.Pressure).ToList();
+                    break;
+                case "id":
+                    data = data.OrderByDescending(d => d.Id).ToList();
+                    break;
+                default:
+                    Console.WriteLine("Invalid sorting option");
+                    break;
+            }
+            return data;
+        }
 
+        public List<Database_data> sort_data_asc(string sort_by)
+        {
+            var data = Measurements.ToList();
+
+            switch (sort_by.ToLower())
+            {
+                case "temp":
+                    data = data.OrderBy(d => d.Temp).ToList();
+                    break;
+                case "pressure":
+                    data = data.OrderBy(d => d.Pressure).ToList();
+                    break;
+                case "id":
+                    data = data.OrderBy(d=>d.Id).ToList();
+                    break;
+                default:
+                    Console.WriteLine("Invalid sorting option");
+                    break;
+            }
+
+            return data;
         }
     }
 }
