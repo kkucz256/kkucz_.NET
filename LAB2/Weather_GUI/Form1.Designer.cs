@@ -81,6 +81,7 @@ namespace Weather_GUI
             label2.Size = new Size(119, 41);
             label2.TabIndex = 3;
             label2.Text = "History:";
+            label2.Click += label2_Click;
             // 
             // delete_btn
             // 
