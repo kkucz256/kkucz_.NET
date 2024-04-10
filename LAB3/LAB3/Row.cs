@@ -9,15 +9,14 @@ namespace LAB3
 {
     internal class Row
     {
-        List<int> items;
-        public Row(int size) 
+        volatile List<int> items;
+        public Row(int size, Random random)
         {
-            Random random = new Random();
             items = new List<int>(size);
 
-            for(int i = 0; i < size; i++)
+            for (int i = 0; i < size; i++)
             {
-                items.Add(random.Next(10,20));
+                items.Add(random.Next(1, 10));
             }
 
         }
@@ -30,6 +29,30 @@ namespace LAB3
                 row += i.ToString() + " ";
             }
             return row;
+        }
+
+        public void set_item_at_index(int index, int value)
+        {
+            if (index >= 0 && index < items.Count)
+            {
+                items[index] = value;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException("Index out of range");
+            }
+        }
+
+        public int get_item_at_index(int index)
+        {
+            if (index >= 0 && index < items.Count)
+            {
+                return items[index];
+            }
+            else
+            {
+                throw new IndexOutOfRangeException("Index out of range");
+            }
         }
     }
 }

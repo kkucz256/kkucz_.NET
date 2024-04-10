@@ -9,39 +9,56 @@ namespace LAB3
 {
     internal class Matrix
     {
-        List<Row> matrix;
+        volatile List<Row> matrix;
         int size;
+        int seed;
 
-        public Matrix(int size)
+        public Matrix(int size, int seed)
         {
             this.matrix = new List<Row>();
             this.size = size;
-            for (int i = 0; i < size; i++) 
+            this.seed = seed;
+
+            Random random = new Random(seed);
+
+            for (int i = 0; i < size; i++)
             {
-                Row row = new Row(size);
+                Row row = new Row(size, random);
                 matrix.Add(row);
             }
-           
-
-            
         }
-        /*
-        public List<int> multiply(Matrix matrix_no2)
-        {
-            List<int> result = new List<int>(size);
 
-            for(int i=0; i < size; i++)
+        public void calculate_row(Matrix other, int rowIndex, List<Row> output)
+        {
+            if (size != other.size)
             {
-                List<int> current_row = matrix[i];
-                foreach(int item in current_row)
-                {
-                    item * matrix_no2
-                }
-               
+                throw new ArgumentException("Matrices must have the same size for multiplication");
+            }
+            if (rowIndex < 0 || rowIndex >= size)
+            {
+                throw new ArgumentOutOfRangeException("Invalid row index");
             }
 
+            Row resultRow = new Row(size, new Random(seed));
 
-        }*/
+            for (int i = 0; i < size; i++)
+            {
+
+                int sum = 0;
+                for (int j = 0; j < size; j++)
+                {
+
+                    sum += this.matrix[rowIndex].get_item_at_index(j) * other.matrix[j].get_item_at_index(i);
+                }
+                resultRow.set_item_at_index(i, sum);
+            }
+
+            lock (output)
+            {
+                output.Add(resultRow);
+            }
+        }
+
 
 
         public override string ToString()
@@ -52,6 +69,15 @@ namespace LAB3
                 items += $"| {row}|\n";
             }
             return items;
+        }
+        public void set_values(List<Row> rows)
+        {
+            if (rows.Count != size)
+            {
+                throw new ArgumentException("Invalid number of rows");
+            }
+
+            matrix = rows;
         }
 
     }
