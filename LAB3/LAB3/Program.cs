@@ -7,14 +7,15 @@
             int size = 500;
             int seed_1 = 1;
             int seed_2 = 2;
+            int cores_no = 10;
 
             Matrix a = new Matrix(size, seed_1);
             Matrix b = new Matrix(size, seed_2);
 
             //Console.WriteLine(a);
             //Console.WriteLine(b);
-
-            for (int threads_no=1; threads_no<7; threads_no++)
+  
+            for (int threads_no=1; threads_no<=cores_no; threads_no++)
             {
                 List<Row> output = new List<Row>(size);
                 int rows_perT = size / threads_no;

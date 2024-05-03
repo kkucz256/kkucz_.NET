@@ -27,7 +27,7 @@ namespace LAB3
                 matrix.Add(row);
             }
         }
-
+    
         public void calculate_row(Matrix other, int rowIndex, List<Row> output)
         {
             if (size != other.size)
