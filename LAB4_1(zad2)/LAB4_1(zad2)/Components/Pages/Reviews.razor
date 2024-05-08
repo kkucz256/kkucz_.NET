@@ -59,6 +59,8 @@
         {
             reviews_for_movie = reviews_for_movie.OrderByDescending(r => r.Rating).ToList();
         }
+
+        reviews_for_movie = reviews_for_movie.Take(review_limit).ToList();
         <table class="table">
             <thead>
                 <tr>
@@ -183,7 +185,7 @@ else
                     <button type="button" class="btn-close" aria-label="Close" @onclick="Error_message"></button>
                 </div>
                 <div class="modal-body">
-                    Title and Description cannot be empty!
+                    Don't leave empty spaces
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" @onclick="Error_message">OK</button>
@@ -248,6 +250,12 @@ else
 
     private async Task Add_review()
     {
+        if (newReview.Movie_id == null || newReview.Movie_id == 0)
+        {
+
+            show_err_msg = true;
+            return;
+        }
         newReview.username = current_user;
         DbContext.ratings.Add(newReview);
         await DbContext.SaveChangesAsync();
