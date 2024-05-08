@@ -1,0 +1,306 @@
+﻿@page "/reviews"
+@using LAB4_1
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Choose a movie</h3>
+        <div class="form-group">
+            <label for="selected_movie_id">Select Movie:</label>
+            <select class="form-control" @bind="selected_movie_id">
+                <option value="">-- None --</option>
+                @foreach (var movie in movies)
+                {
+                    <option value="@movie.Id">@movie.Title</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h3>Sort Order</h3>
+        <div class="form-group">
+            <label for="sort_order">Sort Order:</label>
+            <select class="form-control" @bind="sort_order">
+                <option value="desc">Descending</option>
+                <option value="asc">Ascending</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h3>Limit Reviews</h3>
+        <div class="form-group">
+            <label for="review_limit">Limit:</label>
+            <select class="form-control" @bind="review_limit">
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="100">all</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+
+@if (selected_movie_id != null)
+{
+    var reviews_for_movie = reviews.Where(r => r.Movie_id == selected_movie_id).ToList();
+    if (reviews_for_movie.Any())
+    {
+        if (sort_order == "asc")
+        {
+            reviews_for_movie = reviews_for_movie.OrderBy(r => r.Rating).ToList();
+        }
+        else
+        {
+            reviews_for_movie = reviews_for_movie.OrderByDescending(r => r.Rating).ToList();
+        }
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Movie</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var review in reviews_for_movie)
+                {
+                    <tr>
+                        <td>@review.username</td>
+                        <td>@Get_title(review.Movie_id)</td>
+                        <td>@review.Rating.ToString("N2")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No reviews found for the selected movie.</p>
+    }
+}
+else
+{
+    <p>Select a movie to display reviews.</p>
+}
+
+
+
+<h3>All Movies</h3>
+
+@if (movies != null && movies.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Release Date</th>
+                <th>Average Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in movies)
+            {
+                <tr>
+                    <td>@movie.Title</td>
+                    <td>@movie.Description</td>
+                    <td>@Convert_date(movie.RelaseDate)</td>
+                    <td>@Calculate_rating(movie.Id).ToString("N2")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No movies found.</p>
+}
+<h3>Add New Movie</h3>
+
+
+
+@if (is_authenticated)
+{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" class="form-control" id="title" @bind="newMovie.Title" />
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" id="description" @bind="newMovie.Description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="releaseDate">Release Date:</label>
+                <input type="date" class="form-control" id="releaseDate" @bind="newMovie.RelaseDate" />
+            </div>
+            <button class="btn btn-primary" @onclick="Add_movie">Add Movie</button>
+        </div>
+        <div class="col-md-6">
+            <h3>Add New Review</h3>
+
+            <div class="form-group">
+                <label for="movieId">Movie:</label>
+                <select class="form-control" @bind="newReview.Movie_id">
+                    <option value="">-- Select Movie --</option>
+                    @foreach (var movie in movies)
+                    {
+                        <option value="@movie.Id">@movie.Title</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="rating">Rating:</label>
+                <input type="range" class="form-range" min="1" max="10" id="rating" @bind="newReview.Rating" />
+                <p>@newReview.Rating</p>
+            </div>
+            <button class="btn btn-primary" @onclick="Add_review">Add Review</button>
+        </div>
+    </div>
+}
+else
+{
+    <p>You must be logged in to add a movie or review.</p>
+}
+
+
+
+
+@if (show_err_msg)
+{
+    <div class="modal" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Error</h5>
+                    <button type="button" class="btn-close" aria-label="Close" @onclick="Error_message"></button>
+                </div>
+                <div class="modal-body">
+                    Title and Description cannot be empty!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @onclick="Error_message">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+    List<Review> reviews { get; set; }
+    List<Movie> movies { get; set; }
+    Movie newMovie { get; set; } = new Movie();
+    Review newReview { get; set; } = new Review();
+    Movie_rating DbContext { get; set; }
+
+    bool is_authenticated { get; set; }
+    string current_user { get; set; }
+    int? selected_movie_id { get; set; }
+    string sort_order { get; set; } = "desc"; 
+    int review_limit { get; set; } = 3;
+    bool show_err_msg = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        DbContext = new Movie_rating();
+
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        is_authenticated = authState.User.Identity.IsAuthenticated;
+        if (is_authenticated)
+        {
+            current_user = authState.User.Identity.Name;
+        }
+
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        reviews = await DbContext.ratings.ToListAsync();
+        movies = await DbContext.movies.ToListAsync();
+    }
+
+    private async Task Add_movie()
+    {
+        if (string.IsNullOrWhiteSpace(newMovie.Title) || string.IsNullOrWhiteSpace(newMovie.Description))
+        {
+            show_err_msg = true;
+            return;
+        }
+
+        DbContext.movies.Add(newMovie);
+        await DbContext.SaveChangesAsync();
+
+        newMovie = new Movie();
+        Console.WriteLine("Button");
+
+        await LoadData();
+    }
+
+
+    private async Task Add_review()
+    {
+        newReview.username = current_user;
+        DbContext.ratings.Add(newReview);
+        await DbContext.SaveChangesAsync();
+
+        newReview = new Review();
+
+        await LoadData();
+    }
+
+    private double Calculate_rating(int movieId)
+    {
+        var reviews_for_movie = reviews.Where(r => r.Movie_id == movieId);
+        if (reviews_for_movie.Any())
+        {
+            return reviews_for_movie.Average(r => r.Rating);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    private string Convert_date(DateTime? date)
+    {
+        if (date != null)
+        {
+            return date?.ToString("MM/dd/yyyy");
+        }
+        else
+        {
+            return string.Empty;
+        }
+    }
+
+
+    private void Error_message()
+    {
+        show_err_msg = false;
+    }
+
+
+
+    private string Get_title(int movieId)
+    {
+        var movie = movies.FirstOrDefault(m => m.Id == movieId);
+        if (movie != null)
+        {
+            return movie.Title;
+        }
+        else
+        {
+            return "Unknown";
+        }
+    }
+
+}

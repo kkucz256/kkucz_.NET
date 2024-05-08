@@ -13,6 +13,7 @@ namespace LAB4_1
     }
     public class Review
     {
+        public int Id { get; set; }
         public string username { get; set; }
         public int Movie_id { get; set; }
         public float Rating { get; set; }

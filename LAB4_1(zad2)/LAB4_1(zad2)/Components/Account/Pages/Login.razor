@@ -4,7 +4,8 @@
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Identity
 @using LAB4_1_zad2_.Data
-
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authentication.Google
 @inject SignInManager<ApplicationUser> SignInManager
 @inject ILogger<Login> Logger
 @inject NavigationManager NavigationManager
@@ -110,6 +111,16 @@
         {
             errorMessage = "Error: Invalid login attempt.";
         }
+    }
+
+    private async Task LoginWithGoogle()
+    {
+        var authenticationProperties = new AuthenticationProperties
+            {
+                RedirectUri = "/"
+            };
+
+        await HttpContext.SignInAsync(GoogleDefaults.AuthenticationScheme, new ClaimsPrincipal(), authenticationProperties);
     }
 
     private sealed class InputModel
