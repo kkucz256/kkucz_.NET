@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.example.LoginPanel">
+  <grid id="27dc6" binding="loginpanel" layout-manager="GridBagLayout">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties>
+      <background color="-12831181"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="c913a" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0" ipady="10"/>
+        </constraints>
+        <properties>
+          <background color="-1118741"/>
+          <font size="18" style="1"/>
+          <foreground color="-1118741"/>
+          <text value="Welcome to the Quizz app!"/>
+        </properties>
+      </component>
+      <component id="e2029" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0" ipady="10"/>
+        </constraints>
+        <properties>
+          <background color="-1118741"/>
+          <foreground color="-1118741"/>
+          <text value="Question no.:"/>
+        </properties>
+      </component>
+      <component id="7454d" class="javax.swing.JComboBox" binding="question_combo">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0" ipady="10"/>
+        </constraints>
+        <properties>
+          <background color="-9145756"/>
+          <foreground color="-1118741"/>
+          <inheritsPopupMenu value="true"/>
+        </properties>
+      </component>
+      <component id="3955e" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0" ipady="10"/>
+        </constraints>
+        <properties>
+          <background color="-1118741"/>
+          <foreground color="-1118741"/>
+          <horizontalAlignment value="0"/>
+          <horizontalTextPosition value="0"/>
+          <text value="E-mail:"/>
+        </properties>
+      </component>
+      <component id="19743" class="javax.swing.JTextField" binding="e_mail_field">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+          <gridbag weightx="0.0" weighty="0.0" ipady="10"/>
+        </constraints>
+        <properties>
+          <background color="-9145756"/>
+          <foreground color="-1118741"/>
+        </properties>
+      </component>
+      <component id="810ab" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0" ipady="10"/>
+        </constraints>
+        <properties>
+          <background color="-1118741"/>
+          <foreground color="-1118741"/>
+          <text value="Password:"/>
+        </properties>
+      </component>
+      <component id="3842e" class="javax.swing.JPasswordField" binding="pswrd_field">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+          <gridbag weightx="0.0" weighty="0.0" ipady="10"/>
+        </constraints>
+        <properties>
+          <background color="-9145756"/>
+          <foreground color="-1118741"/>
+        </properties>
+      </component>
+      <component id="395d8" class="javax.swing.JButton" binding="loginButton" default-binding="true">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0" ipady="10"/>
+        </constraints>
+        <properties>
+          <background color="-9145756"/>
+          <foreground color="-1118741"/>
+          <text value="Login"/>
+        </properties>
+      </component>
+      <component id="aa0ae" class="javax.swing.JButton" binding="registerButton" default-binding="true">
+        <constraints>
+          <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0" ipady="10"/>
+        </constraints>
+        <properties>
+          <background color="-9145756"/>
+          <foreground color="-1118741"/>
+          <text value="Register"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
