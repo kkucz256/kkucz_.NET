@@ -10,6 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Tests {
+    
     @Test
     public void check_if_has_data() throws IOException, InterruptedException {
         Data data = new Data();
